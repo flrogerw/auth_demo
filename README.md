@@ -24,7 +24,7 @@ This demo runs within a Docker container but testing is done within the local en
 #### Security
 &nbsp;&nbsp;&nbsp;&nbsp;_This project returns an encrypted Json Web Token containing the access token._
 #### Testing
-&nbsp;&nbsp;&nbsp;&nbsp;_Both integration and unit testing are also demonstrated in this demo.(most other testing I prefer to do in the CI/CD pipeline)_
+&nbsp;&nbsp;&nbsp;&nbsp;_Both integration and unit testing are also demonstrated in this demo.(security scans done in the CI/CD pipeline)_
 #### Logging
 &nbsp;&nbsp;&nbsp;&nbsp;_This project uses a custom logging class.  Logs to STDOUT when running locally._
 #### Error Handling
