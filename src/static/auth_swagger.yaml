@@ -223,6 +223,14 @@ components:
               example: >-
                 yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBdXRoZW50aWNhdGlvblJlc3VsdCI6eyJ
               description: Access token used to authenticate api calls.
+            RefreshToken:
+              type: string
+              pattern: '[\w+]+'
+              maxLength: 256
+              minLength: 10
+              example: >-
+                XVCJ9.eyJBdXRoZW50aWNhdGlvblJlc3VsdCI6eyyJhbGciOiJIUzI1NiIsInR5cCI6IkpJ
+              description: Refresh token used to renew the user Access token.
             ExpiresIn:
               type: integer
               format: int32
