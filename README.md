@@ -1,6 +1,7 @@
 # NelNet Authorization API
 An Express web server using Swagger(OAS3) to define, validate and serve the NelNet Authorization API endpoints.  This demo includes
 both a code documentation UI created using JSDoc as well as a generic Express/SwaggerUI interface where you can interact with the server.
+While the AWS calls are mocked, both endpoints on the server are fully functional as are the tests.
 Both of these interfaces can be accessed using the links listed below once the container is up and running.
 This demo runs within a Docker container but testing is done within the local environment.
 
