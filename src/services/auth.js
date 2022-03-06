@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const { SRPClient, calculateSignature, getNowString } = require('amazon-user-pool-srp-client');
 const jwt = require('jsonwebtoken');
 const ReturnMock = true;
 AWS.config.region = process.env.AWS_REGION
@@ -52,20 +51,31 @@ function init(body) {
 
 /**
  * Cognito Authorization Challenge request.  This is the final step in the Authentication process.
+ * The USERNAME is required so there is at least one system unique identifier in the JWT.
  * @async
  * @method
  * @param {object} body - Express request body object.
- * @returns {string} - Encrypted string of the Cognito Authorization Object containing access token or an Error.
+ * @returns {string} - JWT containing the Cognito Authorization Object containing access token or an Error.
  */
 async function challenge(body) {
   try {
-    const challengeRequest = await _getChallengeRequest(body);
+    const { CLIENT_ID, USERNAME, PASSWORD_CLAIM_SIGNATURE, PASSWORD_CLAIM_SECRET_BLOCK } = body;
+    const challengeRequest = {
+      ChallengeName: 'PASSWORD_VERIFIER',
+      ClientId: CLIENT_ID,
+      ChallengeResponses: {
+        PASSWORD_CLAIM_SIGNATURE,
+        PASSWORD_CLAIM_SECRET_BLOCK,
+        TIMESTAMP: Date.now(),
+        USERNAME,
+      }
+    };
     const response = await _challengeAuth(challengeRequest);
-    const params = {
-      expiresIn: '1h'
-    }
     response.Username = body.USERNAME;
-    const token = jwt.sign(response, process.env.SECRET, params);
+    // Can be used on the backend to determine if a refresh call to Cognito is needed.
+    response.AuthenticationResult.ExpiresAt = Date.now() + response.AuthenticationResult.ExpiresIn;
+
+    const token = jwt.sign(response, process.env.SECRET, { expiresIn: '1h' });
     return Promise.resolve(token);
   } catch (error) {
     Promise.reject(error);
@@ -122,33 +132,24 @@ function _challengeAuth(challengeRequest) {
  * Creates a valid Auth Challenge object using the returned properties from the init call.
  * @private
  * @method
- * @param {object} params - req body object
+ * @param {object} params - Express request body object
  * @returns {object} - Cognito Challenge Auth Request object.
  */
 function _getChallengeRequest(body) {
   if (ReturnMock) return Promise.resolve(_challengeAuthRequestMock);
 
-  const { CLIENT_ID, SRP_B, USERNAME, SALT, SESSION, SECRET_BLOCK } = body;
+  const { CLIENT_ID, USERNAME, PASSWORD_CLAIM_SIGNATURE, PASSWORD_CLAIM_SECRET_BLOCK } = body;
   const dateNow = getNowString();
-  try {
-    const srp = new SRPClient(process.env.USER_POOL_ID)
-    const authKey = srp.getPasswordAuthenticationKey(USERNAME, SRP_B, SALT);
-    const signature = calculateSignature(authKey, process.env.USER_POOL_ID, USERNAME, SECRET_BLOCK, dateNow);
-
-    return Promise.resolve({
-      ChallengeName: 'PASSWORD_VERIFIER',
-      ClientId: CLIENT_ID,
-      ChallengeResponses: {
-        PASSWORD_CLAIM_SIGNATURE: signature,
-        PASSWORD_CLAIM_SECRET_BLOCK: SECRET_BLOCK,
-        TIMESTAMP: dateNow,
-        USERNAME,
-      },
-      Session: SESSION,
-    });
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  return Promise.resolve({
+    ChallengeName: 'PASSWORD_VERIFIER',
+    ClientId: CLIENT_ID,
+    ChallengeResponses: {
+      PASSWORD_CLAIM_SIGNATURE,
+      PASSWORD_CLAIM_SECRET_BLOCK,
+      TIMESTAMP: dateNow,
+      USERNAME,
+    }
+  });
 }
 
 module.exports = {

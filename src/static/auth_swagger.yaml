@@ -166,19 +166,11 @@ components:
       type: object
       description: Successful deletion of resource.
       required:
-        - SRP_B
         - USERNAME
         - CLIENT_ID
-        - SALT
-        - SECRET_BLOCK
+        - PASSWORD_CLAIM_SIGNATURE
+        - PASSWORD_CLAIM_SECRET_BLOCK
       properties:
-        SRP_B:
-          type: integer
-          format: int64
-          minimum: 1000000000
-          maximum: 9223372036854776000
-          example: 1646437699
-          description: Random int 64 number.
         USERNAME:
           type: string
           format: email
@@ -194,27 +186,20 @@ components:
           minLength: 1
           example: 123e4567e89b12d3a456426655440000
           description: Cognito user pool app client id.
-        SALT:
+        PASSWORD_CLAIM_SIGNATURE:
           type: string
           pattern: '[\w+]+'
           maxLength: 128
           minLength: 1
           example: 6fXtRpqlIq49JmsKmpnLuSPOYLzoMj27
-          description: Cognito Auth Challenge SALT.
-        SESSION:
-          type: string
-          pattern: '[\w+]+'
-          maxLength: 128
-          minLength: 1
-          example: YtjZoTcGbVceRZuVbJ1mxXrhY1x2EWG7ex9FtbxL
-          description: Cognito Auth Challenge Session string.
-        SECRET_BLOCK:
+          description: Cognito Auth Challenge calculated password signature.
+        PASSWORD_CLAIM_SECRET_BLOCK:
           type: string
           pattern: '[\w+]+'
           maxLength: 128
           minLength: 1
           example: AzidXtx9WqJ1ARPt1bzwUFMZrKE4OkmwcBTeGss3
-          description: Cognito Auth Challenge Secret Block string.
+          description: Cognito Auth Challenge calculated Secret Block string.
     CognitoChallengeAuthResponse:
       type: object
       description: Successful Auth Challenge. Object contains Access Token
@@ -243,6 +228,11 @@ components:
               format: int32
               example: 36000
               description: Time in seconds until token expires.
+            ExpiresAt:
+              type: integer
+              format: int32
+              example: 1646437699
+              description: Epoch time when the Access token expires.
   requestBodies:
     CognitoInitAuthRequest:
       required: true

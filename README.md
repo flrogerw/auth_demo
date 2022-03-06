@@ -2,6 +2,7 @@
 An Express web server using Swagger(OAS3) to define, validate and serve the NelNet Authorization API endpoints.  This demo includes
 both a code documentation UI created using JSDoc as well as a generic Express/SwaggerUI interface where you can interact with the server.
 While the AWS calls are mocked, both endpoints on the server are fully functional as are the tests.
+I purposely used Javascript Promises to replicate making actual calls to AWS and to implement the async/await methodology.
 Both of these interfaces can be accessed using the links listed below once the container is up and running.
 This demo runs within a Docker container but testing is done within the local environment.
 
@@ -22,7 +23,7 @@ This demo runs within a Docker container but testing is done within the local en
 #### Validation
 &nbsp;&nbsp;&nbsp;&nbsp;_This project implements OpenApiValidator middleware for Swagger/OpenAPI validation._
 #### Security
-&nbsp;&nbsp;&nbsp;&nbsp;_This project returns an encrypted Json Web Token containing the access token._
+&nbsp;&nbsp;&nbsp;&nbsp;_This project returns an encrypted Json Web Token containing the Cognito access token._
 #### Testing
 &nbsp;&nbsp;&nbsp;&nbsp;_Both integration and unit testing are also demonstrated in this demo.(security scans done in the CI/CD pipeline)_
 #### Logging
