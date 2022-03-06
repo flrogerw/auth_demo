@@ -21,7 +21,7 @@ This demo runs within a Docker container but testing is done within the local en
 ### Points of Interest
 
 #### Validation
-&nbsp;&nbsp;&nbsp;&nbsp;_This project implements OpenApiValidator middleware for validation of incoming requests._
+&nbsp;&nbsp;&nbsp;&nbsp;_This project implements OpenApiValidator middleware for validation of the incoming API requests._
 #### Security
 &nbsp;&nbsp;&nbsp;&nbsp;_This project returns an encrypted Json Web Token containing the Cognito access token._
 #### Testing
