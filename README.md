@@ -6,6 +6,16 @@ This demo runs within a Docker container but testing is done within the local en
 
 <br />
 
+### Requirements
+&nbsp;&nbsp;&nbsp;&nbsp;Node >= 16
+
+&nbsp;&nbsp;&nbsp;&nbsp;npm >= 6.13.0
+
+&nbsp;&nbsp;&nbsp;&nbsp;Docker
+
+
+<br />
+
 ### Points of Interest
 
 #### Validation
