@@ -40,7 +40,7 @@ down:
 	docker-compose down
 
 .PHONY: test
-test: test-unit test-integration
+test:  test-unit test-integration
 
 .PHONY: test-unit
 test-unit:

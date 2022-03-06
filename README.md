@@ -8,11 +8,11 @@ This demo runs within a Docker container but testing is done within the local en
 <br />
 
 ### Requirements
-&nbsp;&nbsp;&nbsp;&nbsp;Node >= 16
+&nbsp;&nbsp;&nbsp;&nbsp;_Node >= 16_
 
-&nbsp;&nbsp;&nbsp;&nbsp;npm >= 6.13.0
+&nbsp;&nbsp;&nbsp;&nbsp;_npm >= 6.13.0_
 
-&nbsp;&nbsp;&nbsp;&nbsp;Docker
+&nbsp;&nbsp;&nbsp;&nbsp;_Docker_
 
 
 <br />
@@ -21,6 +21,10 @@ This demo runs within a Docker container but testing is done within the local en
 
 #### Validation
 &nbsp;&nbsp;&nbsp;&nbsp;_This project implements OpenApiValidator middleware for Swagger/OpenAPI validation._
+#### Security
+&nbsp;&nbsp;&nbsp;&nbsp;_This project returns an encrypted Json Web Token containing the access token._
+#### Testing
+&nbsp;&nbsp;&nbsp;&nbsp;_Both integration and unit testing are also demonstrated in this demo.(most other testing I prefer to do in the CI/CD pipeline)_
 #### Logging
 &nbsp;&nbsp;&nbsp;&nbsp;_This project uses a custom logging class.  Logs to STDOUT when running locally._
 #### Error Handling
