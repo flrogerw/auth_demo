@@ -75,10 +75,10 @@ components:
     ValidationError:
       summary: Example of a Validation Error
       value:
-        message: request.body.station_id should be integer
+        message: request.body.USERNAME should be a string
         errors:
-          - path: .body.station_id
-            message: should be integer
+          - path: .body.USERNAME
+            message: should be a string
             errorCode: type.openapi.validation
     InternalServerError:
       summary: Example of a Internal Server Error
