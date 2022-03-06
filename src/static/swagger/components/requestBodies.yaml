@@ -1,0 +1,15 @@
+CognitoInitAuthRequest:
+  required: true
+  description: Cognito Init Auth POST data body
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/CognitoInitAuthRequest'
+
+CognitoChallengeAuthRequest:
+  required: true
+  description: Cognito Init Auth POST data body
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/CognitoChallengeAuthRequest'

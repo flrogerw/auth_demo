@@ -1,0 +1,8 @@
+examples:
+  $ref: ./examples.yaml
+schemas:
+  $ref: ./schemas.yaml
+requestBodies:
+  $ref: ./requestBodies.yaml
+responses:
+  $ref: ./responses.yaml

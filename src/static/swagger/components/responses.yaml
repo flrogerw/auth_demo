@@ -1,0 +1,42 @@
+CognitoChallengeAuthResponse:
+  description: Successful Cognito Challenge Auth Response(un-encrypted).
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/CognitoChallengeAuthResponse'
+CognitoInitAuthResponse:
+  description: Successful Cognito Init Auth Response.
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/CognitoInitAuthResponse'
+BadRequestError:
+  description: Bad Request
+  content:
+    application/json:
+      examples:
+        BadRequestError:
+            $ref: '#/components/examples/BadRequestError'
+        ValidationError:
+            $ref: '#/components/examples/ValidationError'
+UnauthorizedError:
+  description: Unauthorized
+  content:
+    application/json:
+      examples:
+        UnauthorizedError:
+            $ref: '#/components/examples/UnauthorizedError'
+NotFoundError:
+  description: Not Found
+  content:
+    application/json:
+      examples:
+        NotFoundError:
+            $ref: '#/components/examples/NotFoundError'
+InternalServerError:
+  description: Internal Server Error
+  content:
+    application/json:
+      examples:
+        InternalServerError:
+            $ref: '#/components/examples/InternalServerError'

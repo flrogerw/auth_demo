@@ -1,0 +1,62 @@
+UnauthorizedError:
+  summary: Example of a Unauthorized Error
+  value: {
+          errors: [
+            {
+              id: b22b8648-5204-4fb7-9b10-cf901d122b7e,
+              title: Unauthorized,
+              detail: Authentication not valid or not provided,
+              status: 401
+            }
+          ]
+      }
+
+BadRequestError:
+  summary: Example of a Bad Request Error
+  value: {
+        errors: [
+          {
+            id: 9ce2faeb-7607-4432-af4c-525c10db7320,
+            title: Bad Request,
+            detail: You entered a bad request,
+            status: 400
+          }
+        ]
+    }
+
+NotFoundError:
+  summary: Example of a Not Found Error
+  value: {
+          errors: [
+            {
+              id: 948fb33c-c7bd-44ba-9e4c-be1f2b31729b,
+              title: Not Found,
+              detail: The resource you requested is not found,
+              status: 404
+            }
+          ]
+      }
+
+ValidationError:
+  summary: Example of a Validation Error
+  value: {
+      message: request.body.station_id should be integer,
+      errors: [{
+        path: .body.station_id,
+        message: should be integer,
+        errorCode: type.openapi.validation
+        }]
+    }
+    
+InternalServerError:
+  summary: Example of a Internal Server Error
+  value: {
+          errors: [
+            {
+              id: 8fcf55f9-854e-40fa-ae0e-6c2a06e3fec8,
+              title: Internal server error,
+              detail: Something went wrong,
+              status: 500
+            }
+          ]
+      }

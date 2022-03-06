@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>NelNet: Source: utils/logger.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/logger.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const axios = require('axios');
+const os = require('os');
+
+const env = process.env.NODE_ENV;
+const noLogs = ['test', 'dev'];
+
+/**
+* Class for sending data/error logs to Datadog logging service.  Sends to STDOUT in dev mode.
+* @class
+* @param status Status of the data (ok, info, error, etc...)
+* @param log Data to be logged
+*/
+class DataDogLogs {
+  /**
+   * @constructor
+   * @param {string} status - Status of the call, ok. info, error. 
+   * @param {*} log - Message from the service
+   */
+  constructor(status, log) {
+    this.payload = {
+      ddsource: "nelnet",
+      ddtags: `env:${env}, app:api`,
+      hostname: os.hostname(),
+      service: "authorization-api",
+      status,
+      message: log
+    };
+  }
+
+/**
+ * Returns DataDogLogs class payload.
+ * @private
+ * @method
+ * @returns {object} - DataDogLogs payload object.
+*/
+  _getPayload() {
+    return this.payload;
+  }
+}
+
+/**
+* Returns OK response object.
+* @method
+* @param {object} req - Express request object
+* @param {object} response - Successful response object.
+* @returns {object} - DataDogLogs payload object.
+*/
+function getOkResponse(req, response) {
+  const request = (Object.keys(req.body).length !== 0) ? req.body: req.query;
+  const log = {
+    path: req.originalUrl,
+    method: req.method,
+    request: JSON.stringify(request) || null,
+    response: JSON.stringify(response),
+    created: Math.round(Date.now() / 1000)
+  };
+  const dd = new DataDogLogs('ok', log);
+  return dd._getPayload();
+}
+
+/**
+* Returns INFO response object.
+* @method
+* @param req Express request object
+* @param response Successful response object.
+* @returns {object} - DataDogLogs payload object.
+*/
+function getInfoResponse(req, response) {
+  const request = (Object.keys(req.body).length !== 0) ? req.body: req.query;
+  const log = {
+    path: req.originalUrl,
+    method: req.method,
+    request: JSON.stringify(request) || null,
+    response: JSON.stringify(response),
+    created: Math.round(Date.now() / 1000)
+  };
+  const dd = new DataDogLogs('info', log);
+  return dd._getPayload();
+}
+
+/**
+* Returns Error response object.
+* @method
+* @param error Error response object.
+* @param req Express request object
+* @returns {object} - DataDogLogs payload object.
+*/
+function getErrorResponse(error, req) {
+  const request = (Object.keys(req.body).length !== 0) ? req.body: req.query;
+  const log = {
+    path: req.originalUrl,
+    method: req.method,
+    request: JSON.stringify(request) || null,
+    response: JSON.stringify(error),
+    created: Math.round(Date.now() / 1000)
+  };
+  const dd = new DataDogLogs('error', log);
+  return dd._getPayload();
+}
+
+/**
+* Send log object to DataDog using Axios.  Prints to STDOUT in dev mode.
+* @method
+* @param {object} data - Error response object.
+* @returns {promise} - Axios promise or Logger object if running locally.
+*/
+function log(data) {
+  const config = {
+    method: 'post',
+    data,
+    headers: {
+      'DD-API-KEY': process.env.DD_API_KEY,
+      'Content-Type': 'application/json'
+    }
+  };
+  if (noLogs.includes(env)) {
+    console.error(data);
+    return Promise.resolve();
+  }
+  return axios(process.env.DD_API_URL, config);
+}
+
+module.exports = {
+  getOkResponse,
+  getErrorResponse,
+  getInfoResponse,
+  log
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataDogLogs.html">DataDogLogs</a></li><li><a href="GeneralError.html">GeneralError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_challengeAuth">_challengeAuth</a></li><li><a href="global.html#_challengeAuthRequestMock">_challengeAuthRequestMock</a></li><li><a href="global.html#_challengeAuthResponseMock">_challengeAuthResponseMock</a></li><li><a href="global.html#_getChallengeRequest">_getChallengeRequest</a></li><li><a href="global.html#_initAuth">_initAuth</a></li><li><a href="global.html#_initAuthResponseMock">_initAuthResponseMock</a></li><li><a href="global.html#challenge">challenge</a></li><li><a href="global.html#getError">getError</a></li><li><a href="global.html#getErrorResponse">getErrorResponse</a></li><li><a href="global.html#getInfoResponse">getInfoResponse</a></li><li><a href="global.html#getOkResponse">getOkResponse</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#log">log</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sun Mar 06 2022 11:46:53 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+post:
+  description: Cognito Challenge Authorization request.  The request returns an encrypted Json Web Token(JWT).  See the sample 200 response for un-encrypted version.
+  operationId: postCognitoChallengeAuthorization
+  tags:
+    - Authorize
+  requestBody:
+    $ref: '#/components/requestBodies/CognitoChallengeAuthRequest'
+  responses:
+    200:
+      $ref: '#/components/responses/CognitoChallengeAuthResponse'
+    400:
+      $ref: '#/components/responses/BadRequestError'
+    404:
+      $ref: '#/components/responses/NotFoundError'
+    500:
+      $ref: '#/components/responses/InternalServerError'

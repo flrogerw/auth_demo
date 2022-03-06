@@ -1,0 +1,303 @@
+openapi: 3.0.2
+info:
+  title: NelNet Backend Project
+  description: >-
+    The purpose of this project is to help Nelnet Bank gain an understanding of
+    the applicant’s ability  to perform the duties and responsibilities expected
+    of an individual in this role.
+  version: 1.0.1
+servers:
+  - url: /auth
+paths:
+  /init:
+    post:
+      description: Cognito Init Authorization request.
+      operationId: postCognitoInitAuthorization
+      tags:
+        - Authorize
+      requestBody:
+        $ref: '#/components/requestBodies/CognitoInitAuthRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CognitoInitAuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /challenge:
+    post:
+      description: >-
+        Cognito Challenge Authorization request.  The request returns an
+        encrypted Json Web Token(JWT).  See the sample 200 response for
+        un-encrypted version.
+      operationId: postCognitoChallengeAuthorization
+      tags:
+        - Authorize
+      requestBody:
+        $ref: '#/components/requestBodies/CognitoChallengeAuthRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CognitoChallengeAuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  examples:
+    UnauthorizedError:
+      summary: Example of a Unauthorized Error
+      value:
+        errors:
+          - id: b22b8648-5204-4fb7-9b10-cf901d122b7e
+            title: Unauthorized
+            detail: Authentication not valid or not provided
+            status: 401
+    BadRequestError:
+      summary: Example of a Bad Request Error
+      value:
+        errors:
+          - id: 9ce2faeb-7607-4432-af4c-525c10db7320
+            title: Bad Request
+            detail: You entered a bad request
+            status: 400
+    NotFoundError:
+      summary: Example of a Not Found Error
+      value:
+        errors:
+          - id: 948fb33c-c7bd-44ba-9e4c-be1f2b31729b
+            title: Not Found
+            detail: The resource you requested is not found
+            status: 404
+    ValidationError:
+      summary: Example of a Validation Error
+      value:
+        message: request.body.station_id should be integer
+        errors:
+          - path: .body.station_id
+            message: should be integer
+            errorCode: type.openapi.validation
+    InternalServerError:
+      summary: Example of a Internal Server Error
+      value:
+        errors:
+          - id: 8fcf55f9-854e-40fa-ae0e-6c2a06e3fec8
+            title: Internal server error
+            detail: Something went wrong
+            status: 500
+  schemas:
+    CognitoInitAuthResponse:
+      type: object
+      description: Successful Auth Initiation. Object contains challenge parameters
+      properties:
+        ChallengeName:
+          type: string
+          enum:
+            - PASSWORD_VERIFIER
+            - SMS_MFA
+            - CUSTOM_CHALLENGE
+          example: PASSWORD_VERIFIER
+          description: Type of challenge.
+        ChallengeParameters:
+          type: object
+          properties:
+            Srp_B:
+              type: integer
+              format: int64
+              minimum: 1000000000
+              maximum: 9223372036854776000
+              example: 1646437699
+              description: Random int 64 number.
+            Salt:
+              type: string
+              pattern: '[\w+]+'
+              maxLength: 128
+              minLength: 1
+              example: 6fXtRpqlIq49JmsKmpnLuSPOYLzoMj27
+              description: Cognito Auth Challenge SALT.
+            Secret_Block:
+              type: string
+              pattern: '[\w+]+'
+              maxLength: 128
+              minLength: 1
+              example: AzidXtx9WqJ1ARPt1bzwUFMZrKE4OkmwcBTeGss3
+              description: Cognito Auth Challenge Secret Block string.
+        Session:
+          type: string
+          pattern: '[\w+]+'
+          maxLength: 128
+          minLength: 1
+          example: YtjZoTcGbVceRZuVbJ1mxXrhY1x2EWG7ex9FtbxL
+          description: Cognito Auth Challenge Session string.
+    CognitoInitAuthRequest:
+      type: object
+      description: Request object for authorization
+      required:
+        - SRP_A
+        - USERNAME
+        - CLIENT_ID
+      properties:
+        SRP_A:
+          type: integer
+          format: int64
+          minimum: 1000000000
+          maximum: 9223372036854776000
+          example: 1646437699
+          description: Random int 64 number.
+        USERNAME:
+          type: string
+          format: email
+          pattern: .+@[^@]+\.[^@]{2,}$
+          maxLength: 256
+          minLength: 10
+          example: bob@bob.com
+          description: Cognito user name to authenticate.
+        CLIENT_ID:
+          type: string
+          pattern: '[\w+]+'
+          maxLength: 128
+          minLength: 1
+          example: 123e4567e89b12d3a456426655440000
+          description: Cognito user pool app client id.
+    CognitoChallengeAuthRequest:
+      type: object
+      description: Successful deletion of resource.
+      required:
+        - SRP_B
+        - USERNAME
+        - CLIENT_ID
+        - SALT
+        - SECRET_BLOCK
+      properties:
+        SRP_B:
+          type: integer
+          format: int64
+          minimum: 1000000000
+          maximum: 9223372036854776000
+          example: 1646437699
+          description: Random int 64 number.
+        USERNAME:
+          type: string
+          format: email
+          pattern: .+@[^@]+\.[^@]{2,}$
+          maxLength: 256
+          minLength: 10
+          example: bob@bob.com
+          description: Cognito user name to authenticate.
+        CLIENT_ID:
+          type: string
+          pattern: '[\w+]+'
+          maxLength: 128
+          minLength: 1
+          example: 123e4567e89b12d3a456426655440000
+          description: Cognito user pool app client id.
+        SALT:
+          type: string
+          pattern: '[\w+]+'
+          maxLength: 128
+          minLength: 1
+          example: 6fXtRpqlIq49JmsKmpnLuSPOYLzoMj27
+          description: Cognito Auth Challenge SALT.
+        SESSION:
+          type: string
+          pattern: '[\w+]+'
+          maxLength: 128
+          minLength: 1
+          example: YtjZoTcGbVceRZuVbJ1mxXrhY1x2EWG7ex9FtbxL
+          description: Cognito Auth Challenge Session string.
+        SECRET_BLOCK:
+          type: string
+          pattern: '[\w+]+'
+          maxLength: 128
+          minLength: 1
+          example: AzidXtx9WqJ1ARPt1bzwUFMZrKE4OkmwcBTeGss3
+          description: Cognito Auth Challenge Secret Block string.
+    CognitoChallengeAuthResponse:
+      type: object
+      description: Successful Auth Challenge. Object contains Access Token
+      properties:
+        UserName:
+          type: string
+          format: email
+          pattern: .+@[^@]+\.[^@]{2,}$
+          maxLength: 256
+          minLength: 10
+          example: bob@bob.com
+          description: Cognito user name to authenticate.
+        AuthenticationResult:
+          type: object
+          properties:
+            AccessToken:
+              type: string
+              pattern: '[\w+]+'
+              maxLength: 256
+              minLength: 10
+              example: >-
+                yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBdXRoZW50aWNhdGlvblJlc3VsdCI6eyJ
+              description: Access token used to authenticate api calls.
+            ExpiresIn:
+              type: integer
+              format: int32
+              example: 36000
+              description: Time in seconds until token expires.
+  requestBodies:
+    CognitoInitAuthRequest:
+      required: true
+      description: Cognito Init Auth POST data body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CognitoInitAuthRequest'
+    CognitoChallengeAuthRequest:
+      required: true
+      description: Cognito Init Auth POST data body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CognitoChallengeAuthRequest'
+  responses:
+    CognitoChallengeAuthResponse:
+      description: Successful Cognito Challenge Auth Response(un-encrypted).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CognitoChallengeAuthResponse'
+    CognitoInitAuthResponse:
+      description: Successful Cognito Init Auth Response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CognitoInitAuthResponse'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          examples:
+            BadRequestError:
+              $ref: '#/components/examples/BadRequestError'
+            ValidationError:
+              $ref: '#/components/examples/ValidationError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          examples:
+            UnauthorizedError:
+              $ref: '#/components/examples/UnauthorizedError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          examples:
+            NotFoundError:
+              $ref: '#/components/examples/NotFoundError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          examples:
+            InternalServerError:
+              $ref: '#/components/examples/InternalServerError'

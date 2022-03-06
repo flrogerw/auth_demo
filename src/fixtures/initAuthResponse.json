@@ -1,0 +1,9 @@
+{
+    "ChallengeName": "PASSWORD_VERIFIER",
+    "ChallengeParameters": { 
+      "Srp_B" : "oR3UYxTUpOjZQTbF",
+      "Salt" : "qIafN0yFg1hgnEDCza8a6DUBhO5AlvGS",
+      "Secret_Block" : "EDCza8a6DUBhO5AlvGSqIafN0yFg1hgnEDC"
+    },
+    "Session": "40PIeEEHDLRxokCAdpMkngkUIKb6Yxj7VegAe5j1d7m1wUOiK0YJaADNzXLdaoK9O4Wd6sEuKbvHeIvJyLrVMINM0UESTsvzo7MaCiIJbd2V7PamZPhaVRDzbxGBUL9v"
+ }

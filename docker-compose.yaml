@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+      build: .
+      image: nelnet/backend
+      command: npm run dev
+      env_file:
+        - .env
+      volumes:
+        - ./test:/usr/app/test:consistent
+        - ./src:/usr/app/src:consistent
+      ports:
+        - 3000:3000

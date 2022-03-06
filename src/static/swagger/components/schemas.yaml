@@ -1,0 +1,156 @@
+CognitoInitAuthResponse:
+  type: object
+  description: 'Successful Auth Initiation. Object contains challenge parameters'
+  properties:
+    ChallengeName:
+      type: string
+      enum: 
+        - PASSWORD_VERIFIER
+        - SMS_MFA
+        - CUSTOM_CHALLENGE
+      example: PASSWORD_VERIFIER
+      description: Type of challenge.
+    ChallengeParameters:
+      type: object
+      properties:
+       Srp_B:
+        type: integer
+        format: int64
+        minimum: 1000000000
+        maximum: 9223372036854775807
+        example: 1646437699
+        description: Random int 64 number.
+       Salt:
+        type: string
+        pattern: '[\w+]+'
+        maxLength: 128
+        minLength: 1
+        example: 6fXtRpqlIq49JmsKmpnLuSPOYLzoMj27
+        description: Cognito Auth Challenge SALT.
+       Secret_Block:
+        type: string
+        pattern: '[\w+]+'
+        maxLength: 128
+        minLength: 1
+        example: AzidXtx9WqJ1ARPt1bzwUFMZrKE4OkmwcBTeGss3
+        description: Cognito Auth Challenge Secret Block string.
+    Session:
+      type: string
+      pattern: '[\w+]+'
+      maxLength: 128
+      minLength: 1
+      example: YtjZoTcGbVceRZuVbJ1mxXrhY1x2EWG7ex9FtbxL
+      description: Cognito Auth Challenge Session string.
+
+CognitoInitAuthRequest:
+  type: object
+  description: 'Request object for authorization'
+  required:
+    - SRP_A
+    - USERNAME
+    - CLIENT_ID
+  properties:
+    SRP_A:
+      type: integer
+      format: int64
+      minimum: 1000000000
+      maximum: 9223372036854775807
+      example: 1646437699
+      description: Random int 64 number.
+    USERNAME:
+      type: string
+      format: email
+      pattern: '.+@[^@]+\.[^@]{2,}$' # FOR EXAMPLE ONLY!!
+      maxLength: 256
+      minLength: 10
+      example: bob@bob.com
+      description: Cognito user name to authenticate.
+    CLIENT_ID:
+      type: string
+      pattern: '[\w+]+'
+      maxLength: 128
+      minLength: 1
+      example: 123e4567e89b12d3a456426655440000
+      description: Cognito user pool app client id.
+
+CognitoChallengeAuthRequest:
+  type: object
+  description: 'Successful deletion of resource.'
+  required:
+    - SRP_B
+    - USERNAME
+    - CLIENT_ID
+    - SALT
+    - SECRET_BLOCK
+  properties:
+    SRP_B:
+      type: integer
+      format: int64
+      minimum: 1000000000
+      maximum: 9223372036854775807
+      example: 1646437699
+      description: Random int 64 number.
+    USERNAME:
+      type: string
+      format: email
+      pattern: '.+@[^@]+\.[^@]{2,}$' # FOR EXAMPLE ONLY!!
+      maxLength: 256
+      minLength: 10
+      example: bob@bob.com
+      description: Cognito user name to authenticate.
+    CLIENT_ID:
+      type: string
+      pattern: '[\w+]+'
+      maxLength: 128
+      minLength: 1
+      example: 123e4567e89b12d3a456426655440000
+      description: Cognito user pool app client id.
+    SALT:
+      type: string
+      pattern: '[\w+]+'
+      maxLength: 128
+      minLength: 1
+      example: 6fXtRpqlIq49JmsKmpnLuSPOYLzoMj27
+      description: Cognito Auth Challenge SALT.
+    SESSION:
+      type: string
+      pattern: '[\w+]+'
+      maxLength: 128
+      minLength: 1
+      example: YtjZoTcGbVceRZuVbJ1mxXrhY1x2EWG7ex9FtbxL
+      description: Cognito Auth Challenge Session string. 
+    SECRET_BLOCK:
+      type: string
+      pattern: '[\w+]+'
+      maxLength: 128
+      minLength: 1
+      example: AzidXtx9WqJ1ARPt1bzwUFMZrKE4OkmwcBTeGss3
+      description: Cognito Auth Challenge Secret Block string.
+
+CognitoChallengeAuthResponse:
+  type: object
+  description: 'Successful Auth Challenge. Object contains Access Token'
+  properties:
+    UserName:
+        type: string
+        format: email
+        pattern: '.+@[^@]+\.[^@]{2,}$' # FOR EXAMPLE ONLY!!
+        maxLength: 256
+        minLength: 10
+        example: bob@bob.com
+        description: Cognito user name to authenticate.
+    AuthenticationResult:
+      type: object
+      properties:
+        AccessToken:
+          type: string
+          pattern: '[\w+]+'
+          maxLength: 256
+          minLength: 10
+          example: yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBdXRoZW50aWNhdGlvblJlc3VsdCI6eyJ
+          description: Access token used to authenticate api calls.
+        ExpiresIn:
+          type: integer
+          format: int32
+          example: 36000
+          description: Time in seconds until token expires.

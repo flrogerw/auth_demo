@@ -1,0 +1,6 @@
+# Initiate Authorization
+'/init':
+  $ref: ./auth/Init.yaml
+# Challenge call
+'/challenge':
+  $ref: ./auth/Challenge.yaml

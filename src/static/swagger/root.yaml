@@ -1,0 +1,13 @@
+openapi: 3.0.2
+info:
+  title: NelNet Backend Project
+  description: >-
+    The purpose of this project is to help Nelnet Bank gain an understanding of the applicant’s ability 
+    to perform the duties and responsibilities expected of an individual in this role.
+  version: 1.0.1
+servers:
+  - url: /auth
+paths:
+  $ref: ./src/static/swagger/paths/index.yaml
+components:
+  $ref: ./src/static/swagger/components/index.yaml

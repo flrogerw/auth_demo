@@ -1,0 +1,11 @@
+{
+    "ChallengeName": "PASSWORD_VERIFIER",
+    "ClientId": "123e4567e89b12d3a456426655440000",
+    "ChallengeResponses": {
+      "PASSWORD_CLAIM_SIGNATURE": "ervgt678EDCza8a6DGSqIafN0yFg1UBhO5AlvhgnEDC",
+      "PASSWORD_CLAIM_SECRET_BLOCK": "EDCza8a6DUBhO5AlvGSqIafN0yFg1hgnEDC",
+      "TIMESTAMP": 1646437699,
+      "USERNAME": "bob@bob.com"
+    },
+    "Session": "40PIeEEHDLRxokCAdpMkngkUIKb6Yxj7VegAe5j1d7m1wUOiK0YJaADNzXLdaoK9O4Wd6sEuKbvHeIvJyLrVMINM0UESTsvzo7MaCiIJbd2V7PamZPhaVRDzbxGBUL9v"
+  }
