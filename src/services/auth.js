@@ -10,6 +10,7 @@ AWS.config.region = process.env.AWS_REGION
  * @type {string}
  */
 const _initAuthResponseMock = require('../fixtures/initAuthResponse.json');
+
 /** 
  * Mock Challenge Authorization Response
  * @private 
@@ -17,6 +18,7 @@ const _initAuthResponseMock = require('../fixtures/initAuthResponse.json');
  * @type {string}
  */
 const _challengeAuthResponseMock = require('../fixtures/challengeAuthResponse.json');
+
 /** 
  * Mock Challenge Authorization Request
  * @private
@@ -31,7 +33,6 @@ const _challengeAuthRequestMock = require('../fixtures/challengeAuthRequest.json
  * @param {object} body - Express request body object.
  * @return - Object containing challenge parameters for step 2.
  */
-
 function init(body) {
   try {
     const { USERNAME, SRP_A, CLIENT_ID } = body;
