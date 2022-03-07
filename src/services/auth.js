@@ -7,7 +7,7 @@ AWS.config.region = process.env.AWS_REGION
  * Mock Init Authorization Response 
  * @private
  * @constant
- * @type {string}
+ * @type {object}
  */
 const _initAuthResponseMock = require('../fixtures/initAuthResponse.json');
 
@@ -15,17 +15,9 @@ const _initAuthResponseMock = require('../fixtures/initAuthResponse.json');
  * Mock Challenge Authorization Response
  * @private 
  * @constant
- * @type {string}
+ * @type {object}
  */
 const _challengeAuthResponseMock = require('../fixtures/challengeAuthResponse.json');
-
-/** 
- * Mock Challenge Authorization Request
- * @private
- * @constant
- * @type {string}
- */
-const _challengeAuthRequestMock = require('../fixtures/challengeAuthRequest.json');
 
 /**
  * Initialize Cognito Authorization using user input.  This is the first step in the Authentication process.
