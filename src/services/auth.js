@@ -31,6 +31,7 @@ const _challengeAuthRequestMock = require('../fixtures/challengeAuthRequest.json
  * @param {object} body - Express request body object.
  * @return - Object containing challenge parameters for step 2.
  */
+
 function init(body) {
   try {
     const { USERNAME, SRP_A, CLIENT_ID } = body;
