@@ -128,30 +128,6 @@ function _challengeAuth(challengeRequest) {
   }
 }
 
-/**
- * Creates a valid Auth Challenge object using the returned properties from the init call.
- * @private
- * @method
- * @param {object} params - Express request body object
- * @returns {object} - Cognito Challenge Auth Request object.
- */
-function _getChallengeRequest(body) {
-  if (ReturnMock) return Promise.resolve(_challengeAuthRequestMock);
-
-  const { CLIENT_ID, USERNAME, PASSWORD_CLAIM_SIGNATURE, PASSWORD_CLAIM_SECRET_BLOCK } = body;
-  const dateNow = getNowString();
-  return Promise.resolve({
-    ChallengeName: 'PASSWORD_VERIFIER',
-    ClientId: CLIENT_ID,
-    ChallengeResponses: {
-      PASSWORD_CLAIM_SIGNATURE,
-      PASSWORD_CLAIM_SECRET_BLOCK,
-      TIMESTAMP: dateNow,
-      USERNAME,
-    }
-  });
-}
-
 module.exports = {
   init,
   challenge
