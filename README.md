@@ -23,13 +23,13 @@ This demo runs within a Docker container but testing is done within the local en
 #### Validation
 &nbsp;&nbsp;&nbsp;&nbsp;_This project implements OpenApiValidator middleware for validation of the incoming API requests._
 #### Security
-&nbsp;&nbsp;&nbsp;&nbsp;_This project returns an encrypted Json Web Token containing the Cognito access token._
+&nbsp;&nbsp;&nbsp;&nbsp;_This project returns an encrypted Json Web Token containing the Cognito Access and Refresh tokens._
 #### Testing
 &nbsp;&nbsp;&nbsp;&nbsp;_Both integration and unit testing are also demonstrated in this demo.(security scans done in the CI/CD pipeline)_
 #### Logging
-&nbsp;&nbsp;&nbsp;&nbsp;_This project uses a custom logging class.  Logs to STDOUT when running locally._
+&nbsp;&nbsp;&nbsp;&nbsp;_This project uses a custom logging class.  Logs to STDOUT when running locally, DataDog in production._
 #### Error Handling
-&nbsp;&nbsp;&nbsp;&nbsp;_This project implements an error handler to return generic messages so not to expose system bugs._
+&nbsp;&nbsp;&nbsp;&nbsp;_This project implements an error handler to return generic messages so not to expose system bugs to the client._
 #### Documentation
 &nbsp;&nbsp;&nbsp;&nbsp;_Once the cluster is running, you can access the documentation using the links below:_
 
