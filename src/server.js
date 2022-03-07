@@ -60,10 +60,10 @@ resolve(root, options).then((results) => {
     if (err) { logger.error(`Could not create swagger.yaml: ${err.message}`); }
   });
 
-/**
- * Expose public folder to webserver.
- */
-app.use(express.static( __dirname + '/public'));
+  /**
+   * Expose public folder to webserver.
+   */
+  app.use(express.static(__dirname + '/public'));
 
 
   /**

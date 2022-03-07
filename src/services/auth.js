@@ -94,7 +94,7 @@ function _initAuth(authRequest) {
   try {
     let cognitoProvider = new AWS.CognitoIdentityServiceProvider();
     return cognitoProvider.adminInitiateAuth(authRequest, (err, data) => {
-      if (err) { throw err; }
+      if (err) { return Promise.reject(err); }
       return Promise.resolve(data);
     })
       .catch(error => {
